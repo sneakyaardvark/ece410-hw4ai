@@ -20,6 +20,7 @@
               torchvision
             ]))
           iverilog
+          ruff
         ];
       };
     }
