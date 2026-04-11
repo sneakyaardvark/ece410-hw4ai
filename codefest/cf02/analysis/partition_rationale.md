@@ -1,0 +1,6 @@
+# Partition Proposal
+
+In the software execution on my current hardware the matrix multiply, unsurprisingly, is the dominant kernel. This will be the main kernel to accelerate in the hardware design. However, to reduce the speed required on the interface, I will accelerate the entire loop of the network. Only the output layer wil be sent back to the host over the SPI interface. The host will continue to handle input spike generation as well as integration and classification of the output layer, which is comparively trivial for an MPU to handle in software.
+
+It is unlikely the transfer of the output data will be a bottleneck. The input data, if densely packed, would be 8.75 KB per audio sample (each 1.4 seconds long). The output spikes are 2.5 KB, so a single sample will be a transfer of 11.25 KB total. The compute time, given the hardware target of 0.8 GOPS, would be 45 ms. Required bandwidth $= 11.25 KB / 45 ms = 250 KB/s$. Even with a 1 MHz SPI connection this would be satisfied. For SPI, this bandwidth isn't a bottleneck even at 1MHz. The kernel is compute-bound on my current hardware (see roofline and AI calculations). Since the accelerator will mostly handle matrix multiplication, it is likely it will stay compute-bound.
+
