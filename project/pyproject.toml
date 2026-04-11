@@ -1,0 +1,43 @@
+[project]
+name = "shd-snn"
+version = "0.1.0"
+description = "Spiking neural network for Heidelberg Spiking Digits classification"
+requires-python = ">=3.11"
+dependencies = [
+    "torch",
+    "numpy",
+    "h5py",
+    "matplotlib",
+    "seaborn",
+]
+
+[project.scripts]
+shd-train = "shd_snn.train:main"
+shd-profile = "shd_snn.profile:main"
+
+[dependency-groups]
+dev = [
+    "ruff",
+]
+
+[tool.setuptools.packages.find]
+exclude = ["src*"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
