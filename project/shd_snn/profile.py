@@ -2,6 +2,9 @@
 
 import argparse
 import os
+import resource
+import statistics
+import time
 
 import h5py
 import torch
@@ -84,6 +87,23 @@ def main():
     print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=20))
     print(f"\nTrace saved to {args.output_dir}/")
     print("View with: tensorboard --logdir", args.output_dir)
+
+    # Single-sample wall-clock timing (≥10 runs)
+    sample = batches[0][:1]  # one sample from first batch
+    nb_runs = 10
+    times = []
+    for _ in range(nb_runs):
+        t0 = time.perf_counter()
+        with torch.no_grad():
+            model(sample, 1)
+        times.append(time.perf_counter() - t0)
+
+    median_s = statistics.median(times)
+    print(f"\nSingle-sample inference ({nb_runs} runs):")
+    print(f"  Median: {median_s*1000:.2f} ms")
+    print(f"  Throughput: {1/median_s:.1f} samples/sec")
+    peak_rss_kb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    print(f"  Peak RSS: {peak_rss_kb / 1024:.1f} MB")
 
     test_file.close()
 

@@ -1,25 +1,30 @@
 -----------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
                          Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls  
 -----------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-                ProfilerStep*        10.27%      38.069ms       100.00%     370.764ms      61.794ms           0 B      -1.56 GB             6  
-                 aten::einsum         1.64%       6.080ms        41.61%     154.257ms     252.054us     246.09 MB           0 B           612  
-                    aten::bmm        37.75%     139.948ms        37.77%     140.051ms     228.842us     246.09 MB     246.09 MB           612  
-                  aten::stack         0.07%     249.751us        16.44%      60.950ms       3.386ms     246.21 MB           0 B            18  
-                    aten::cat        16.34%      60.577ms        16.36%      60.675ms       3.371ms     246.21 MB     246.21 MB            18  
-                SurrGradSpike         2.25%       8.361ms         9.60%      35.588ms      59.314us     117.19 MB     -29.30 MB           600  
-                    aten::mul         7.06%      26.163ms         8.85%      32.812ms      10.937us     375.00 MB     374.99 MB          3000  
-                    aten::add         6.91%      25.632ms         6.91%      25.632ms       8.544us     375.00 MB     375.00 MB          3000  
-                    aten::sub         3.62%      13.421ms         4.82%      17.889ms      14.908us     234.38 MB     234.37 MB          1200  
-                     aten::to         0.55%       2.049ms         3.49%      12.953ms       3.084us      16.41 KB           0 B          4200  
-                   aten::rsub         0.28%       1.024ms         3.09%      11.458ms      19.097us     117.19 MB           0 B           600  
-                     aten::gt         2.55%       9.455ms         3.05%      11.290ms      18.816us      29.30 MB      29.29 MB           600  
-               aten::_to_copy         1.46%       5.429ms         2.94%      10.904ms       2.596us      16.41 KB           0 B          4200  
-             aten::index_put_         0.23%     839.345us         2.91%      10.781ms      17.969us           0 B           0 B           600  
-       aten::_index_put_impl_         0.27%       1.006ms         2.68%       9.942ms      16.570us           0 B           0 B           600  
-           aten::masked_fill_         2.27%       8.398ms         2.27%       8.398ms      13.997us           0 B           0 B           600  
-             aten::zeros_like         0.23%     859.488us         1.37%       5.078ms       8.464us     117.19 MB           0 B           600  
-                aten::permute         0.88%       3.245ms         1.06%       3.945ms       1.289us           0 B           0 B          3060  
-                  aten::zero_         0.11%     424.965us         0.89%       3.291ms       5.224us           0 B           0 B           630  
-                 aten::select         0.70%       2.604ms         0.88%       3.255ms       2.713us           0 B           0 B          1200  
+                ProfilerStep*        10.31%      37.837ms       100.00%     366.915ms      61.152ms           0 B      -1.56 GB             6  
+                 aten::einsum         1.66%       6.097ms        42.17%     154.716ms     252.803us     246.09 MB           0 B           612  
+                    aten::bmm        38.22%     140.244ms        38.25%     140.357ms     229.341us     246.09 MB     246.09 MB           612  
+                  aten::stack         0.07%     252.710us        17.63%      64.683ms       3.594ms     246.21 MB           0 B            18  
+                    aten::cat        17.53%      64.307ms        17.55%      64.406ms       3.578ms     246.21 MB     246.21 MB            18  
+                SurrGradSpike         2.28%       8.358ms         9.75%      35.771ms      59.619us     117.19 MB     -29.30 MB           600  
+                    aten::mul         5.97%      21.903ms         7.81%      28.652ms       9.551us     375.00 MB     374.99 MB          3000  
+                    aten::add         6.78%      24.860ms         6.78%      24.860ms       8.287us     375.00 MB     375.00 MB          3000  
+                    aten::sub         2.80%      10.284ms         4.01%      14.708ms      12.257us     234.38 MB     234.37 MB          1200  
+                     aten::to         0.54%       1.994ms         3.55%      13.030ms       3.102us      16.41 KB           0 B          4200  
+                     aten::gt         2.59%       9.510ms         3.10%      11.367ms      18.944us      29.30 MB      29.29 MB           600  
+               aten::_to_copy         1.49%       5.476ms         3.01%      11.037ms       2.628us      16.41 KB           0 B          4200  
+             aten::index_put_         0.23%     862.019us         2.95%      10.841ms      18.068us           0 B           0 B           600  
+       aten::_index_put_impl_         0.27%     985.085us         2.72%       9.979ms      16.631us           0 B           0 B           600  
+           aten::masked_fill_         2.31%       8.458ms         2.31%       8.458ms      14.097us           0 B           0 B           600  
+                   aten::rsub         0.28%       1.046ms         2.26%       8.299ms      13.832us     117.19 MB           0 B           600  
+             aten::zeros_like         0.24%     867.095us         1.40%       5.121ms       8.535us     117.19 MB           0 B           600  
+                aten::permute         0.89%       3.261ms         1.08%       3.977ms       1.300us           0 B           0 B          3060  
+                 aten::select         0.73%       2.672ms         0.91%       3.339ms       2.783us           0 B           0 B          1200  
+                  aten::zero_         0.12%     430.163us         0.90%       3.318ms       5.266us           0 B           0 B           630  
 -----------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-Self CPU time total: 370.764ms
+Self CPU time total: 366.915ms
+
+Single-sample inference (10 runs):
+  Median: 7.74 ms
+  Throughput: 129.2 samples/sec
+  Peak RSS: 1407.6 MB
