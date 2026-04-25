@@ -9,6 +9,7 @@ dependencies = [
     "h5py",
     "matplotlib",
     "seaborn",
+    "cocotb>=2.0.1",
 ]
 
 [project.scripts]
