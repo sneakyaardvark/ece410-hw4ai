@@ -1,0 +1,54 @@
+make -f /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/lib/python3.13/site-packages/cocotb_tools/makefiles/Makefile.sim \
+	TOPLEVEL=tb_interface \
+	VERILOG_SOURCES="/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb/../rtl/interface.sv /home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb/tb_interface.sv" \
+	COCOTB_TEST_MODULES=test_interface \
+	SIM_BUILD=sim_build_interface
+make[1]: Entering directory '/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb'
+rm -f results.xml
+"make" -f /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/lib/python3.13/site-packages/cocotb_tools/makefiles/Makefile.sim results.xml
+make[2]: Entering directory '/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb'
+rm -f results.xml
+COCOTB_TEST_MODULES=test_interface COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=tb_interface TOPLEVEL_LANG=verilog \
+         /usr/bin/vvp -M /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/lib/python3.13/site-packages/cocotb/libs -m libcocotbvpi_icarus   sim_build_interface/sim.vvp   
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.13.0rc1 interpreter at /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/bin/python3
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Icarus Verilog version 12.0 (stable)
+     0.00ns INFO     cocotb                             Seeding Python random module with 1777750982
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/lib/python3.13/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_interface.test_reset (1/7)
+                                                            After reset: strobes low, alpha/beta/threshold at defaults.
+    50.00ns INFO     cocotb.regression                  test_interface.test_reset passed
+    50.00ns INFO     cocotb.regression                  running test_interface.test_write_spike_in (2/7)
+                                                            Complete SPI WRITE to 0xA000 updates spike_in[7:0].
+  6020.00ns INFO     cocotb.regression                  test_interface.test_write_spike_in passed
+  6020.00ns INFO     cocotb.regression                  running test_interface.test_write_weight (3/7)
+                                                            SPI WRITE to weight SRAM addr 0x0005 fires weight_wr_en with correct addr/data.
+ 11850.00ns INFO     cocotb.regression                  test_interface.test_write_weight passed
+ 11850.00ns INFO     cocotb.regression                  running test_interface.test_start_pulse (4/7)
+                                                            Writing 0x01 to control register (0xA019) produces a one-cycle start pulse.
+ 17680.00ns INFO     cocotb.regression                  test_interface.test_start_pulse passed
+ 17680.00ns INFO     cocotb.regression                  running test_interface.test_read_status (5/7)
+                                                            SPI READ from 0xA01A returns {done, busy} correctly.
+ 29610.00ns INFO     cocotb.regression                  test_interface.test_read_status passed
+ 29610.00ns INFO     cocotb.regression                  running test_interface.test_read_spike_out (6/7)
+                                                            SPI READ from 0xA01B returns spike_out byte latched on done pulse.
+ 35620.00ns INFO     cocotb.regression                  test_interface.test_read_spike_out passed
+ 35620.00ns INFO     cocotb.regression                  running test_interface.test_write_alpha (7/7)
+                                                            SPI WRITEs to alpha lo/hi registers update the alpha output port.
+ 47530.01ns INFO     cocotb.regression                  test_interface.test_write_alpha passed
+ 47530.01ns INFO     cocotb.regression                  ********************************************************************************************
+                                                        ** TEST                                STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        ********************************************************************************************
+                                                        ** test_interface.test_reset            PASS          50.00           0.00      97360.82  **
+                                                        ** test_interface.test_write_spike_in   PASS        5970.00           0.01     500910.10  **
+                                                        ** test_interface.test_write_weight     PASS        5830.00           0.01     417532.52  **
+                                                        ** test_interface.test_start_pulse      PASS        5830.00           0.01     418633.35  **
+                                                        ** test_interface.test_read_status      PASS       11930.00           0.02     504486.99  **
+                                                        ** test_interface.test_read_spike_out   PASS        6010.00           0.01     511272.25  **
+                                                        ** test_interface.test_write_alpha      PASS       11910.00           0.02     511956.55  **
+                                                        ********************************************************************************************
+                                                        ** TESTS=7 PASS=7 FAIL=0 SKIP=0                    47530.01           0.10     471011.85  **
+                                                        ********************************************************************************************
+make[2]: Leaving directory '/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb'
+make[1]: Leaving directory '/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb'

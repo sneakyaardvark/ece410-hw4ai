@@ -1,0 +1,46 @@
+make -f /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/lib/python3.13/site-packages/cocotb_tools/makefiles/Makefile.sim \
+	TOPLEVEL=tb_compute_core \
+	VERILOG_SOURCES="/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb/../rtl/snn_mac.sv /home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb/../rtl/snn_mac_array.sv /home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb/../rtl/snn_lif_cell.sv /home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb/../rtl/snn_lif_bank.sv /home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb/../rtl/compute_core.sv /home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb/tb_compute_core.sv" \
+	COCOTB_TEST_MODULES=test_compute_core \
+	SIM_BUILD=sim_build_compute_core
+make[1]: Entering directory '/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb'
+rm -f results.xml
+"make" -f /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/lib/python3.13/site-packages/cocotb_tools/makefiles/Makefile.sim results.xml
+make[2]: Entering directory '/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb'
+rm -f results.xml
+COCOTB_TEST_MODULES=test_compute_core COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=tb_compute_core TOPLEVEL_LANG=verilog \
+         /usr/bin/vvp -M /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/lib/python3.13/site-packages/cocotb/libs -m libcocotbvpi_icarus   sim_build_compute_core/sim.vvp   
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.13.0rc1 interpreter at /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/bin/python3
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Icarus Verilog version 12.0 (stable)
+     0.00ns INFO     cocotb                             Seeding Python random module with 1777751012
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /home/andrew/repo/ece410-hw4ai-sp26/project/.venv/lib/python3.13/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_compute_core.test_reset (1/5)
+                                                            After reset, busy=0, done=0, spike_out=0.
+    50.00ns INFO     cocotb.regression                  test_compute_core.test_reset passed
+    50.00ns INFO     cocotb.regression                  running test_compute_core.test_busy_lifecycle (2/5)
+                                                            busy asserted from start, held through inference, cleared on done.
+  3220.00ns INFO     cocotb.regression                  test_compute_core.test_busy_lifecycle passed
+  3220.00ns INFO     cocotb.regression                  running test_compute_core.test_zero_weights_no_spikes (3/5)
+                                                            All-zero weights and spike_in=0 → spike_out=0 after NB_STEPS steps.
+  6400.00ns INFO     cocotb.regression                  test_compute_core.test_zero_weights_no_spikes passed
+  6400.00ns INFO     cocotb.regression                  running test_compute_core.test_full_inference_random (4/5)
+                                                            Random INT8 weights and spike_in; compare spike_out to reference model.
+  9600.00ns INFO     cocotb.regression                  test_compute_core.test_full_inference_random passed
+  9600.00ns INFO     cocotb.regression                  running test_compute_core.test_full_inference_diagonal (5/5)
+                                                            Diagonal weight matrix: output k driven only by input k.
+ 12800.00ns INFO     cocotb.regression                  test_compute_core.test_full_inference_diagonal passed
+ 12800.00ns INFO     cocotb.regression                  ********************************************************************************************************
+                                                        ** TEST                                            STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        ********************************************************************************************************
+                                                        ** test_compute_core.test_reset                     PASS          50.00           0.00      81984.05  **
+                                                        ** test_compute_core.test_busy_lifecycle            PASS        3170.00           0.01     384286.94  **
+                                                        ** test_compute_core.test_zero_weights_no_spikes    PASS        3180.00           0.01     399337.93  **
+                                                        ** test_compute_core.test_full_inference_random     PASS        3200.00           0.02     150803.05  **
+                                                        ** test_compute_core.test_full_inference_diagonal   PASS        3200.00           0.01     401128.89  **
+                                                        ********************************************************************************************************
+                                                        ** TESTS=5 PASS=5 FAIL=0 SKIP=0                                12800.00           0.05     269028.75  **
+                                                        ********************************************************************************************************
+make[2]: Leaving directory '/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb'
+make[1]: Leaving directory '/home/andrew/repo/ece410-hw4ai-sp26/project/m2/tb'
