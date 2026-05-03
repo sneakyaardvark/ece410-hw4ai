@@ -1,5 +1,11 @@
 # Milestone 2 — SNN Hardware Accelerator
 
+> **Note on filename vs. module name.** The SPI interface file is
+> `rtl/interface.sv` (per the M2 checklist) but the top module inside is
+> `spi_interface` because `interface` is a reserved keyword in SystemVerilog.
+> The testbench wrapper instantiates `spi_interface` directly. See *Deviations
+> from Milestone 1 Plan* below.
+
 ## RTL Modules
 
 | File | Module | Description |
@@ -20,9 +26,35 @@ iverilog -V
 # Icarus Verilog version 12.0 (stable)
 ```
 
+## Setup (from a clean clone)
+
+Python 3.11+ is required. cocotb 2.0.1 and numpy must be installed and
+visible to the `python3` on your `PATH` when `make` invokes the cocotb
+makefile.
+
+**Option A — uv (recommended, matches CI):**
+
+```bash
+cd project
+uv sync                       # creates .venv, installs cocotb, numpy, torch, h5py, ...
+source .venv/bin/activate     # or run subsequent make commands via `uv run make ...`
+```
+
+**Option B — plain pip / venv:**
+
+```bash
+cd project
+python3 -m venv .venv
+source .venv/bin/activate
+pip install "cocotb>=2.0.1" numpy
+```
+
+(Only `cocotb` and `numpy` are needed to run the M2 testbenches; the other
+project dependencies are for training, not simulation.)
+
 ## Running Tests
 
-Tests require the project virtual environment (created with `uv`):
+With the environment activated:
 
 ```bash
 cd project/m2/tb
@@ -34,6 +66,7 @@ make lif_cell
 make lif_bank
 make compute_core
 make interface
+make precision_sweep   # 100-trial INT8-vs-FP32 quantization error sweep
 
 # All targets
 make all
@@ -47,6 +80,7 @@ are captured in `sim/`.
 
 - `sim/compute_core_run.log` — 5 tests, all PASS
 - `sim/interface_run.log` — 7 tests, all PASS
+- `sim/precision_sweep_run.log` — 100-trial INT8-vs-FP32 quantization error sweep
 - `sim/waveform.png` — annotated waveform showing one SPI WRITE and one SPI READ transaction
 
 ## Deviations from Milestone 1 Plan

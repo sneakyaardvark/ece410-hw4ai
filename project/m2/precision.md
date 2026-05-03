@@ -44,7 +44,55 @@ of 32768 (= 2¹⁵) was chosen to be reachable by a neuron receiving moderate
 positive synaptic input over several timesteps, ensuring neurons can spike in
 the reference test cases.
 
-## Quantization Error Analysis
+## Empirical Quantization Error Sweep (DUT vs FP32, 100 samples)
+
+A dedicated cocotb test (`tb/test_precision_sweep.py`, target
+`make precision_sweep`) drives the synthesizable INT8 MAC array
+(`snn_mac_array`) with 100 independent random trials and compares the DUT
+output against a double-precision FP32 reference dot product. Each trial:
+
+- length T = 200 (matches one v1 row, the dominant kernel from M1 profiling)
+- weights w_fp ∈ [−1, 1) FP32, uniformly random
+- activations a_fp ∈ [−1, 1) FP32, uniformly random
+- symmetric INT8 quantization at scale s = 127:
+  `w_int = clip(round(w_fp * 127), −128, 127)`, same for activations
+- DUT output dequantized as `dut_fp = dut_int / (127 × 127)`
+- per-output absolute error `|dut_fp − ref_fp|`
+
+100 trials × 8 PEs = **800 sample errors**.
+
+Results (from `sim/precision_sweep_run.log`, seed = 2026):
+
+| metric                  | value     | relative to FP32 dynamic range |
+|-------------------------|-----------|--------------------------------|
+| reference range         | [−14.57, +13.51] | —                       |
+| **MAE**                 | 0.02137   | **0.076 %**                    |
+| RMS error               | 0.02674   | 0.095 %                        |
+| **max abs error**       | 0.08080   | **0.288 %**                    |
+
+The observed RMS (0.0267) tracks the analytical zero-mean accumulation
+prediction `√T · σ_w · σ_a / s ≈ 0.037` to within 30 %, and is two orders
+of magnitude below the correlated worst-case bound `T / s ≈ 1.57`. The
+worst single-output error in 800 trials is 0.081, well under 1 % of the
+signal range.
+
+**Acceptability statement.** Since the downstream consumer of each MAC
+result is a thresholded LIF neuron (binary spike vs no-spike), the
+relevant tolerance is the fraction of the membrane signal range over
+which a quantization perturbation could flip a spike decision near
+threshold. With the default threshold = 32768 and a typical neuron
+operating excursion of roughly ±2× threshold, the usable signal range is
+≈ 1.3 × 10⁵ on the integer scale. The measured worst-case MAC error of
+0.081 in dequantized units corresponds to roughly 1 % of the membrane
+swing, which can only flip neurons whose pre-quantization input falls
+inside a narrow band around threshold. We adopt a 1 % relative-error
+tolerance for the linear MAC stage as the application-specific
+acceptability threshold; the measured MAE of 0.076 % is comfortably
+under this bound. End-to-end classification accuracy with trained SHD
+weights will be measured in M3 once the w1 / w2 / v1 pipeline is
+integrated.
+
+## Analytical Error Discussion
 
 The dominant quantization error source is the INT8 weight representation.
 The maximum rounding error per weight is ±0.5 LSB, or ±0.5 on the integer

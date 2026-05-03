@@ -12,7 +12,7 @@ COCOTB_MAKEFILES = $(shell cocotb-config --makefiles)
 # DUT targets — run as: make mac | make mac_array | make all
 # ----------------------------------------------------------------------------
 
-.PHONY: mac mac_array lif_cell lif_bank compute_core interface all
+.PHONY: mac mac_array lif_cell lif_bank compute_core interface precision_sweep all
 
 mac:
 	$(MAKE) -f $(COCOTB_MAKEFILES)/Makefile.sim \
@@ -55,6 +55,13 @@ interface:
 		VERILOG_SOURCES="$(RTL)/interface.sv $(PWD)/tb_interface.sv" \
 		COCOTB_TEST_MODULES=test_interface \
 		SIM_BUILD=sim_build_interface
+
+precision_sweep:
+	$(MAKE) -f $(COCOTB_MAKEFILES)/Makefile.sim \
+		TOPLEVEL=tb_snn_mac_array \
+		VERILOG_SOURCES="$(RTL)/snn_mac.sv $(RTL)/snn_mac_array.sv $(PWD)/tb_snn_mac_array.sv" \
+		COCOTB_TEST_MODULES=test_precision_sweep \
+		SIM_BUILD=sim_build_precision_sweep
 
 all: mac mac_array lif_cell lif_bank compute_core interface
 

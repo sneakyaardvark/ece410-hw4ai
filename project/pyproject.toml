@@ -19,6 +19,7 @@ shd-profile = "shd_snn.profile:main"
 [dependency-groups]
 dev = [
     "ruff",
+    "pytest",
 ]
 
 [tool.setuptools.packages.find]
